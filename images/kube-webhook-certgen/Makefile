@@ -20,7 +20,7 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
 
 TAG ?=v$(shell date +%m%d%Y)-$(shell git rev-parse --short HEAD)
-REGISTRY ?= local
+REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
 
 IMAGE = $(REGISTRY)/kube-webhook-certgen
 
@@ -28,7 +28,7 @@ IMAGE = $(REGISTRY)/kube-webhook-certgen
 export DOCKER_CLI_EXPERIMENTAL=enabled
 
 # build with buildx
-PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x
+PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x,linux/ppc64le
 OUTPUT=
 PROGRESS=plain
 
@@ -37,6 +37,11 @@ build: ensure-buildx
 		--platform=${PLATFORMS} $(OUTPUT) \
 		--progress=$(PROGRESS) \
 		--pull \
+		-t $(IMAGE):$(TAG) rootfs
+
+custom-build: 
+	docker build  \
+		--build-arg TARGETARCH=$(ARCH) \
 		-t $(IMAGE):$(TAG) rootfs
 
 # push the cross built image

@@ -22,7 +22,7 @@ INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
 
 # 0.0.0 shouldn't clobber any released builds
 TAG ?= 0.0
-REGISTRY ?= gcr.io/k8s-staging-ingress-nginx
+REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
 
 IMAGE = $(REGISTRY)/nginx
 
@@ -30,7 +30,7 @@ IMAGE = $(REGISTRY)/nginx
 export DOCKER_CLI_EXPERIMENTAL=enabled
 
 # build with buildx
-PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x
+PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x,linux/ppc64le
 OUTPUT=
 PROGRESS=plain
 build: ensure-buildx
@@ -39,6 +39,9 @@ build: ensure-buildx
 		--progress=$(PROGRESS) \
 		--pull \
 		--tag $(IMAGE):$(TAG) rootfs
+
+custom-build: 
+	docker build --tag $(IMAGE):$(TAG) rootfs
 
 # push the cross built image
 push: OUTPUT=--push
@@ -54,4 +57,4 @@ else
 endif
 	@echo "done"
 
-.PHONY: build push ensure-buildx
+.PHONY: custom-build build push ensure-buildx

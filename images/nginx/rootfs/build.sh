@@ -138,6 +138,13 @@ if [[ ${ARCH} == "s390x" ]]; then
   export LUA_STREAM_NGX_VERSION=0.0.7
 fi
 
+if [[ ${ARCH} == "ppc64le" ]]; then
+  export LUAJIT_VERSION=2763a421d6219c8cb2bbd39246de619dc796bab6
+  export LUA_RESTY_CORE=0.1.17
+  export LUA_NGX_VERSION=0.10.15
+  export LUA_STREAM_NGX_VERSION=0.0.7
+fi
+
 get_src()
 {
   hash="$1"
@@ -241,6 +248,11 @@ get_src 7d5f3439c8df56046d0564b5857fd8a30296ab1bd6df0f048aed7afb56a0a4c2 \
         "https://github.com/openresty/lua-nginx-module/archive/v$LUA_NGX_VERSION.tar.gz"
 get_src 99c47c75c159795c9faf76bbb9fa58e5a50b75286c86565ffcec8514b1c74bf9 \
         "https://github.com/openresty/stream-lua-nginx-module/archive/v$LUA_STREAM_NGX_VERSION.tar.gz"
+elif [[ ${ARCH} == "ppc64le" ]]; then
+get_src 7d5f3439c8df56046d0564b5857fd8a30296ab1bd6df0f048aed7afb56a0a4c2 \
+        "https://github.com/openresty/lua-nginx-module/archive/v$LUA_NGX_VERSION.tar.gz"
+get_src 99c47c75c159795c9faf76bbb9fa58e5a50b75286c86565ffcec8514b1c74bf9 \
+        "https://github.com/openresty/stream-lua-nginx-module/archive/v$LUA_STREAM_NGX_VERSION.tar.gz"
 else
 get_src 085a9fb2bf9c4466977595a5fe5156d76f3a2d9a2a81be3cacaff2021773393e \
         "https://github.com/openresty/lua-nginx-module/archive/$LUA_NGX_VERSION.tar.gz"
@@ -255,6 +267,9 @@ get_src a92c9ee6682567605ece55d4eed5d1d54446ba6fba748cff0a2482aea5713d5f \
 
 if [[ ${ARCH} == "s390x" ]]; then
 get_src 266ed1abb70a9806d97cb958537a44b67db6afb33d3b32292a2d68a2acedea75 \
+        "https://github.com/openresty/luajit2/archive/$LUAJIT_VERSION.tar.gz"
+elif [[ ${ARCH} == "ppc64le" ]]; then
+get_src d3c55f72d0dc3241a2a7da7a7dad97800ce329adf70eab80a6f08f156eeb6be8 \
         "https://github.com/openresty/luajit2/archive/$LUAJIT_VERSION.tar.gz"
 else
 get_src 1ee6dad809a5bb22efb45e6dac767f7ce544ad652d353a93d7f26b605f69fe3f \
@@ -283,6 +298,9 @@ get_src 16d72ed133f0c6df376a327386c3ef4e9406cf51003a700737c3805770ade7c5 \
         "https://github.com/openresty/lua-resty-balancer/archive/v$LUA_RESTY_BALANCER.tar.gz"
 
 if [[ ${ARCH} == "s390x" ]]; then
+get_src 8f5f76d2689a3f6b0782f0a009c56a65e4c7a4382be86422c9b3549fe95b0dc4 \
+        "https://github.com/openresty/lua-resty-core/archive/v$LUA_RESTY_CORE.tar.gz"
+elif [[ ${ARCH} == "ppc64le" ]]; then
 get_src 8f5f76d2689a3f6b0782f0a009c56a65e4c7a4382be86422c9b3549fe95b0dc4 \
         "https://github.com/openresty/lua-resty-core/archive/v$LUA_RESTY_CORE.tar.gz"
 else

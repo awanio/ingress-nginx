@@ -19,11 +19,11 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
 
 TAG ?=v$(shell date +%m%d%Y)-$(shell git rev-parse --short HEAD)
-REGISTRY ?= local
+REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
 
 IMAGE = $(REGISTRY)/e2e-test-runner
 
-NGINX_BASE_IMAGE ?= k8s.gcr.io/ingress-nginx/nginx:81c2afd975a6f9a9847184472286044d7d5296f6@sha256:a71ac64dd8cfd68341ba47dbdc4d8c2cb91325fce669875193ea0319118201b5
+NGINX_BASE_IMAGE ?= r.awan.app/library/k8s-ingress-nginx/nginx:v1.2.0
 
 # required to enable buildx
 export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -51,6 +51,23 @@ build: ensure-buildx
 		--build-arg YAMALE_VERSION=1.8.0 \
 		--build-arg HELM_VERSION=v3.4.2 \
 		-t $(IMAGE):$(TAG) rootfs
+
+custom-build:
+	docker build \
+                --build-arg BASE_IMAGE=$(NGINX_BASE_IMAGE) \
+                --build-arg GOLANG_VERSION=1.17.6 \
+                --build-arg ETCD_VERSION=3.4.3-0 \
+                --build-arg K8S_RELEASE=v1.21.3 \
+                --build-arg RESTY_CLI_VERSION=0.27 \
+                --build-arg RESTY_CLI_SHA=e5f4f3128af49ba5c4d039d0554e5ae91bbe05866f60eccfa96d3653274bff90 \
+                --build-arg LUAROCKS_VERSION=3.8.0 \
+                --build-arg LUAROCKS_SHA=ab6612ca9ab87c6984871d2712d05525775e8b50172701a0a1cabddf76de2be7 \
+                --build-arg CHART_TESTING_VERSION=3.0.0 \
+                --build-arg YAML_LINT_VERSION=1.13.0 \
+                --build-arg YAMALE_VERSION=1.8.0 \
+                --build-arg HELM_VERSION=v3.4.2 \
+		--build-arg TARGETARCH=$(ARCH) \
+                -t $(IMAGE):$(TAG) rootfs
 
 # push the cross built image
 push: OUTPUT=--push

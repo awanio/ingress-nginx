@@ -1,0 +1,1278 @@
+diff --git a/.github/ISSUE_TEMPLATE/bug_report.md b/.github/ISSUE_TEMPLATE/bug_report.md
+deleted file mode 100644
+index 9f8fd83ba..000000000
+--- a/.github/ISSUE_TEMPLATE/bug_report.md
++++ /dev/null
+@@ -1,139 +0,0 @@
+----
+-name: Bug report
+-about: Problems and issues with code or docs
+-title: ''
+-labels: kind/bug
+-assignees: ''
+-
+----
+-
+-<!--
+-
+-Welcome to ingress-nginx!  For a smooth issue process, try to answer the following questions.
+-Don't worry if they're not all applicable; just try to include what you can :-)
+-
+-If you need to include code snippets or logs, please put them in fenced code
+-blocks.  If they're super-long, please use the details tag like
+-<details><summary>super-long log</summary> lots of stuff </details>
+-
+--->
+-
+-<!--
+-
+-IMPORTANT!!!
+-
+-Please complete the next sections or the issue will be closed.
+-This questions are the first thing we need to know to understand the context.
+-
+--->
+-
+-**NGINX Ingress controller version** (exec into the pod and run nginx-ingress-controller --version.):
+-<!--
+-POD_NAMESPACE=ingress-nginx
+-POD_NAME=$(kubectl get pods -n $POD_NAMESPACE -l app.kubernetes.io/name=ingress-nginx --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}')
+-
+-kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --version  
+--->
+-
+-**Kubernetes version** (use `kubectl version`):
+-
+-**Environment**:
+-
+-- **Cloud provider or hardware configuration**:
+-- **OS** (e.g. from /etc/os-release):
+-- **Kernel** (e.g. `uname -a`):
+-- **Install tools**:
+-  - `Please mention how/where was the cluster created like kubeadm/kops/minikube/kind etc. `
+-- **Basic cluster related info**:
+-  - `kubectl version`
+-  - `kubectl get nodes -o wide`
+-
+-- **How was the ingress-nginx-controller installed**:
+-  - If helm was used then please show output of `helm ls -A | grep -i ingress`
+-  - If helm was used then please show output of `helm -n <ingresscontrollernamepspace> get values <helmreleasename>`
+-  - If helm was not used, then copy/paste the complete precise command used to install the controller, along with the flags and options used
+-  - if you have more than one instance of the ingress-nginx-controller installed in the same cluster, please provide details for all the instances
+-
+-- **Current State of the controller**:
+-  - `kubectl describe ingressclasses`
+-  - `kubectl -n <ingresscontrollernamespace> get all -A -o wide`
+-  - `kubectl -n <ingresscontrollernamespace> describe po <ingresscontrollerpodname>`
+-  - `kubectl -n <ingresscontrollernamespace> describe svc <ingresscontrollerservicename>`
+-
+-- **Current state of ingress object, if applicable**:
+-  - `kubectl -n <appnnamespace> get all,ing -o wide`
+-  - `kubectl -n <appnamespace> describe ing <ingressname>`
+-  - If applicable, then, your complete and exact curl/grpcurl command (redacted if required) and the reponse to the curl/grpcurl command with the -v flag
+-
+-- **Others**:
+-  - Any other related information like ;
+-    - copy/paste of the snippet (if applicable)
+-    - `kubectl describe ...` of any custom configmap(s) created and in use
+-    - Any other related information that may help
+-
+-**What happened**:
+-
+-<!-- (please include exact error messages if you can) -->
+-
+-**What you expected to happen**:
+-
+-<!-- What do you think went wrong? -->
+-
+-**How to reproduce it**:
+-<!---
+-
+-As minimally and precisely as possible. Keep in mind we do not have access to your cluster or application.
+-Help up us (if possible) reproducing the issue using minikube or kind.
+-
+-## Install minikube/kind
+-
+-- Minikube https://minikube.sigs.k8s.io/docs/start/
+-- Kind https://kind.sigs.k8s.io/docs/user/quick-start/
+-
+-## Install the ingress controller
+-
+-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/baremetal/deploy.yaml
+-
+-## Install an application that will act as default backend (is just an echo app)
+-
+-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/docs/examples/http-svc.yaml
+-
+-## Create an ingress (please add any additional annotation required)
+-
+-echo "
+-  apiVersion: networking.k8s.io/v1
+-  kind: Ingress
+-  metadata:
+-    name: foo-bar
+-    annotations:
+-      kubernetes.io/ingress.class: nginx
+-  spec:
+-    ingressClassName: nginx # omit this if you're on controller version below 1.0.0
+-    rules:
+-    - host: foo.bar
+-      http:
+-        paths:
+-        - path: /
+-          pathType: Prefix
+-          backend:
+-            service:
+-              name: http-svc
+-              port: 
+-                number: 80
+-" | kubectl apply -f -
+-
+-## make a request
+-
+-POD_NAME=$(k get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx -o NAME)
+-kubectl exec -it -n ingress-nginx $POD_NAME -- curl -H 'Host: foo.bar' localhost
+-
+---->
+-
+-**Anything else we need to know**:
+-
+-<!-- If this is actually about documentation, uncomment the following block -->
+-
+-<!-- 
+-/kind documentation
+-/remove-kind bug
+--->
+diff --git a/.github/ISSUE_TEMPLATE/config.yml b/.github/ISSUE_TEMPLATE/config.yml
+deleted file mode 100644
+index 888b1d5dd..000000000
+--- a/.github/ISSUE_TEMPLATE/config.yml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-contact_links:
+-  - name: Support Request/Question 
+-    url: https://kubernetes.slack.com/messages/ingress-nginx/
+-    about: Support request or question relating to Ingress NGINX in Kubernetes Slack
+diff --git a/.github/ISSUE_TEMPLATE/feature_request.md b/.github/ISSUE_TEMPLATE/feature_request.md
+deleted file mode 100644
+index b4041a579..000000000
+--- a/.github/ISSUE_TEMPLATE/feature_request.md
++++ /dev/null
+@@ -1,33 +0,0 @@
+----
+-name: Feature request
+-about: Suggest an idea for this project or its docs
+-title: ''
+-labels: kind/feature
+-assignees: ''
+-
+----
+-
+-<!--
+-
+-Welcome to ingress-nginx!  For a smooth feature request process, try to
+-answer the following questions. Don't worry if they're not all applicable; just
+-try to include what you can :-)
+-
+-If you need to include code snippets or logs, please put them in fenced code
+-blocks.  If they're super-long, please use the details tag like
+-<details><summary>super-long log</summary> lots of stuff </details>
+-
+--->
+-
+-<!-- What do you want to happen? -->
+-
+-<!-- Is there currently another issue associated with this? -->
+-
+-<!-- Does it require a particular kubernetes version? -->
+-
+-<!-- If this is actually about documentation, uncomment the following block -->
+-
+-<!-- 
+-/kind documentation
+-/remove-kind feature
+--->
+\ No newline at end of file
+diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
+deleted file mode 100644
+index 9bc455303..000000000
+--- a/.github/PULL_REQUEST_TEMPLATE.md
++++ /dev/null
+@@ -1,34 +0,0 @@
+-<!--- Provide a general summary of your changes in the Title above --->
+-<!--- Please don't @-mention people in PR or commit messages (do so in an additional comment). --->
+-
+-## What this PR does / why we need it:
+-<!--- Why is this change required? What problem does it solve? -->
+-<!--- If it fixes an open issue, please link to the issue here. -->
+-
+-## Types of changes
+-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
+-- [ ] Bug fix (non-breaking change which fixes an issue)
+-- [ ] New feature (non-breaking change which adds functionality)
+-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+-- [ ] Documentation only
+-
+-## Which issue/s this PR fixes
+-<!--
+-(optional, in `fixes #<issue number>` format, will close that issue when PR gets merged):
+-
+-fixes #
+--->
+-
+-## How Has This Been Tested?
+-<!--- Please describe in detail how you tested your changes. -->
+-<!--- Include details of your testing environment, and the tests you ran to -->
+-<!--- see how your change affects other areas of the code, etc. -->
+-
+-## Checklist:
+-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
+-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
+-- [ ] My change requires a change to the documentation.
+-- [ ] I have updated the documentation accordingly.
+-- [ ] I've read the [CONTRIBUTION](https://github.com/kubernetes/ingress-nginx/blob/main/CONTRIBUTING.md) guide
+-- [ ] I have added tests to cover my changes.
+-- [ ] All new and existing tests passed.
+diff --git a/.github/actions/mkdocs/Dockerfile b/.github/actions/mkdocs/Dockerfile
+deleted file mode 100644
+index b5b564d3e..000000000
+--- a/.github/actions/mkdocs/Dockerfile
++++ /dev/null
+@@ -1,10 +0,0 @@
+-FROM squidfunk/mkdocs-material:6.2.4
+-
+-RUN pip install mkdocs-awesome-pages-plugin
+-
+-COPY action.sh /action.sh
+-
+-RUN apk add --no-cache bash \
+-  && chmod +x /action.sh
+-
+-ENTRYPOINT ["/action.sh"]
+diff --git a/.github/actions/mkdocs/action.sh b/.github/actions/mkdocs/action.sh
+deleted file mode 100644
+index 07ddbddb9..000000000
+--- a/.github/actions/mkdocs/action.sh
++++ /dev/null
+@@ -1,51 +0,0 @@
+-#!/bin/bash
+-
+-# Copyright 2020 The Kubernetes Authors.
+-#
+-# Licensed under the Apache License, Version 2.0 (the "License");
+-# you may not use this file except in compliance with the License.
+-# You may obtain a copy of the License at
+-#
+-#     http://www.apache.org/licenses/LICENSE-2.0
+-#
+-# Unless required by applicable law or agreed to in writing, software
+-# distributed under the License is distributed on an "AS IS" BASIS,
+-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-# See the License for the specific language governing permissions and
+-# limitations under the License.
+-
+-set -e
+-
+-REQUIREMENTS="${GITHUB_WORKSPACE}/requirements.txt"
+-
+-if [ -f "${REQUIREMENTS}" ]; then
+-    pip install -r "${REQUIREMENTS}"
+-fi
+-
+-if [ -n "${GITHUB_TOKEN}" ]; then
+-    remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+-elif [ -n "${PERSONAL_TOKEN}" ]; then
+-    remote_repo="https://x-access-token:${PERSONAL_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+-fi
+-
+-git config --global user.name "$GITHUB_ACTOR"
+-git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+-
+-mkdocs build --config-file "${GITHUB_WORKSPACE}/mkdocs.yml"
+-
+-git clone --branch=gh-pages --depth=1 "${remote_repo}" gh-pages
+-cd gh-pages
+-
+-# copy current index file index.yaml before any change
+-temp_worktree=$(mktemp -d)
+-cp --force "index.yaml" "$temp_worktree/index.yaml"
+-# remove current content in branch gh-pages
+-git rm -r .
+-# copy new doc.
+-cp -r ../site/* .
+-# restore chart index
+-cp "$temp_worktree/index.yaml" .
+-# commit changes
+-git add .
+-git commit -m "Deploy GitHub Pages"
+-git push --force --quiet "${remote_repo}" gh-pages > /dev/null 2>&1
+diff --git a/.github/actions/mkdocs/action.yml b/.github/actions/mkdocs/action.yml
+deleted file mode 100644
+index 20860f3c9..000000000
+--- a/.github/actions/mkdocs/action.yml
++++ /dev/null
+@@ -1,9 +0,0 @@
+-# action.yml
+-name: 'Deploy MkDocs'
+-description: 'Deploys MkDocs site'
+-branding:
+-  icon: 'arrow-up-circle'
+-  color: 'orange'
+-runs:
+-  using: 'docker'
+-  image: 'Dockerfile'
+diff --git a/.github/dependabot.yml b/.github/dependabot.yml
+deleted file mode 100644
+index 61634d5a4..000000000
+--- a/.github/dependabot.yml
++++ /dev/null
+@@ -1,7 +0,0 @@
+----
+-version: 2
+-updates:
+-  - package-ecosystem: "gomod"
+-    directory: "/"
+-    schedule:
+-      interval: "weekly"
+diff --git a/.github/workflows/ci.yaml b/.github/workflows/ci.yaml
+deleted file mode 100644
+index e82d55134..000000000
+--- a/.github/workflows/ci.yaml
++++ /dev/null
+@@ -1,416 +0,0 @@
+-name: CI
+-
+-on:
+-  pull_request:
+-    branches:
+-      - "*"
+-
+-  push:
+-    branches:
+-      - main
+-
+-permissions:
+-  contents: read
+-
+-jobs:
+-
+-  changes:
+-    permissions:
+-      contents: read  # for dorny/paths-filter to fetch a list of changed files
+-      pull-requests: read  # for dorny/paths-filter to read pull requests
+-    runs-on: ubuntu-latest
+-    outputs:
+-      go: ${{ steps.filter.outputs.go }}
+-      charts: ${{ steps.filter.outputs.charts }}
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # v2
+-        id: filter
+-        with:
+-          token: ${{ secrets.GITHUB_TOKEN }}
+-          filters: |
+-            go:
+-              - '**/*.go'
+-              - 'go.mod'
+-              - 'go.sum'
+-              - 'rootfs/**/*'
+-              - 'TAG'
+-              - 'test/e2e/**/*'
+-            charts:
+-              - 'charts/ingress-nginx/Chart.yaml'
+-              - 'charts/ingress-nginx/**/*'
+-
+-  security:
+-    runs-on: ubuntu-latest
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - name: Run Gosec Security Scanner
+-        uses: securego/gosec@b99b5f7838e43a4104354ad92a6a1774302ee1f9 # master
+-        with:
+-          # G601 for zz_generated.deepcopy.go
+-          # G306 TODO: Expect WriteFile permissions to be 0600 or less
+-          # G307 TODO: Deferring unsafe method "Close"
+-          args: -exclude=G109,G601,G104,G204,G304,G306,G307 -tests=false -exclude-dir=test -exclude-dir=images/  -exclude-dir=docs/ ./...
+-
+-  build:
+-    name: Build
+-    runs-on: ubuntu-latest
+-    needs: changes
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - name: Set up Go 1.17
+-        id: go
+-        uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492 # v2
+-        with:
+-          go-version: '1.17.6'
+-
+-      - name: Set up Docker Buildx
+-        id: buildx
+-        uses: crazy-max/ghaction-docker-buildx@e01797ad2ea9a981005ad58c99afa8d842e3d3eb # v1
+-        with:
+-          buildx-version: latest
+-          qemu-version: latest
+-
+-      - name: Available platforms
+-        run: echo ${{ steps.buildx.outputs.platforms }}
+-
+-      - name: Prepare Host
+-        run: |
+-          sudo apt-get -qq update || true
+-          sudo apt-get install -y pigz
+-          curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl
+-          chmod +x ./kubectl
+-          sudo mv ./kubectl /usr/local/bin/kubectl
+-
+-      - name: Build images
+-        env:
+-          TAG: 1.0.0-dev
+-          ARCH: amd64
+-          REGISTRY: ingress-controller
+-        run: |
+-          echo "building images..."
+-          make clean-image build image image-chroot
+-          make -C test/e2e-image image
+-
+-          echo "creating images cache..."
+-          docker save \
+-            nginx-ingress-controller:e2e \
+-            ingress-controller/controller:1.0.0-dev \
+-            ingress-controller/controller-chroot:1.0.0-dev \
+-            | pigz > docker.tar.gz
+-
+-      - name: cache
+-        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # v2
+-        with:
+-          name: docker.tar.gz
+-          path: docker.tar.gz
+-
+-  helm:
+-    name: Helm chart
+-    runs-on: ubuntu-latest
+-    needs:
+-      - changes
+-      - build
+-    if: |
+-      (needs.changes.outputs.charts == 'true')
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - name: Setup Go
+-        uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492 # v2
+-        with:
+-          go-version: '1.17.6'
+-
+-      - name: cache
+-        uses: actions/download-artifact@f023be2c48cc18debc3bacd34cb396e0295e2869 # v2
+-        with:
+-          name: docker.tar.gz
+-
+-      - name: Lint
+-        run: |
+-          ./build/run-in-docker.sh ./hack/verify-chart-lint.sh
+-
+-      - name: Run helm-docs
+-        run: |
+-          GOBIN=$PWD GO111MODULE=on go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.8.1
+-          ./helm-docs --chart-search-root=${GITHUB_WORKSPACE}/charts
+-          DIFF=$(git diff ${GITHUB_WORKSPACE}/charts/ingress-nginx/README.md)
+-          if [ ! -z "$DIFF" ]; then
+-            echo "Please use helm-docs in your clone, of your fork, of the project, and commit a updated README.md for the chart. https://github.com/kubernetes/ingress-nginx/blob/main/RELEASE.md#d-edit-the-valuesyaml-and-run-helm-docs"
+-          fi
+-          git diff --exit-code
+-          rm -f ./helm-docs
+-
+-      - name: Run Artifact Hub lint
+-        run: |
+-          wget https://github.com/artifacthub/hub/releases/download/v1.5.0/ah_1.5.0_linux_amd64.tar.gz
+-          tar -xzvf ah_1.5.0_linux_amd64.tar.gz ah
+-          ./ah lint -p charts/ingress-nginx || exit 1
+-          rm -f ./ah ./ah_1.5.0_linux_amd64.tar.gz
+-
+-      - name: fix permissions
+-        run: |
+-          sudo mkdir -p $HOME/.kube
+-          sudo chmod -R 777 $HOME/.kube
+-
+-      - name: Create Kubernetes cluster
+-        id: kind
+-        uses: engineerd/setup-kind@aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0 # v0.5.0
+-        with:
+-          version: v0.11.1
+-          image: kindest/node:v1.21.1
+-
+-      - uses: geekyeggo/delete-artifact@a6ab43859c960a8b74cbc6291f362c7fb51829ba # v1
+-        with:
+-          name: docker.tar.gz
+-          failOnError: false
+-
+-      - name: Load images from cache
+-        run: |
+-          echo "loading docker images..."
+-          pigz -dc docker.tar.gz | docker load
+-
+-      - name: Test
+-        env:
+-          KIND_CLUSTER_NAME: kind
+-          SKIP_CLUSTER_CREATION: true
+-          SKIP_IMAGE_CREATION: true
+-        run: |
+-          kind get kubeconfig > $HOME/.kube/kind-config-kind
+-          make kind-e2e-chart-tests
+-
+-  kubernetes:
+-    name: Kubernetes
+-    runs-on: ubuntu-latest
+-    needs:
+-      - changes
+-      - build
+-    if: |
+-      (needs.changes.outputs.go == 'true')
+-
+-    strategy:
+-      matrix:
+-        k8s: [v1.19.11, v1.20.7, v1.21.2, v1.22.0, v1.23.0]
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - name: cache
+-        uses: actions/download-artifact@f023be2c48cc18debc3bacd34cb396e0295e2869 # v2
+-        with:
+-          name: docker.tar.gz
+-
+-      - name: Create Kubernetes ${{ matrix.k8s }} cluster
+-        id: kind
+-        uses: engineerd/setup-kind@aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0 # v0.5.0
+-        with:
+-          version: v0.11.1
+-          config: test/e2e/kind.yaml
+-          image: kindest/node:${{ matrix.k8s }}
+-
+-      - uses: geekyeggo/delete-artifact@a6ab43859c960a8b74cbc6291f362c7fb51829ba # v1
+-        with:
+-          name: docker.tar.gz
+-          failOnError: false
+-
+-      - name: Prepare cluster for testing
+-        id: local-path
+-        run: |
+-          kubectl version
+-          echo
+-          echo "installing helm 3..."
+-          curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+-
+-      - name: Load images from cache
+-        run: |
+-          echo "loading docker images..."
+-          pigz -dc docker.tar.gz | docker load
+-
+-      - name: Run e2e tests
+-        env:
+-          KIND_CLUSTER_NAME: kind
+-          SKIP_CLUSTER_CREATION: true
+-          SKIP_IMAGE_CREATION: true
+-        run: |
+-          kind get kubeconfig > $HOME/.kube/kind-config-kind
+-          make kind-e2e-test
+-
+-  kubernetes-chroot:
+-    name: Kubernetes chroot
+-    runs-on: ubuntu-latest
+-    needs:
+-      - changes
+-      - build
+-    if: |
+-      (needs.changes.outputs.go == 'true')
+-
+-    strategy:
+-      matrix:
+-        k8s: [v1.21.10, v1.22.7, v1.23.4]
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@v2
+-
+-      - name: cache
+-        uses: actions/download-artifact@v2
+-        with:
+-          name: docker.tar.gz
+-
+-      - name: Create Kubernetes ${{ matrix.k8s }} cluster
+-        id: kind
+-        uses: engineerd/setup-kind@v0.5.0
+-        with:
+-          version: v0.12.0
+-          config: test/e2e/kind.yaml
+-          image: kindest/node:${{ matrix.k8s }}
+-
+-      - uses: geekyeggo/delete-artifact@v1
+-        with:
+-          name: docker.tar.gz
+-          failOnError: false
+-
+-      - name: Prepare cluster for testing
+-        id: local-path
+-        run: |
+-          kubectl version
+-          echo
+-          echo "installing helm 3..."
+-          curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+-
+-      - name: Load images from cache
+-        run: |
+-          echo "loading docker images..."
+-          pigz -dc docker.tar.gz | docker load
+-
+-      - name: Run e2e tests
+-        env:
+-          KIND_CLUSTER_NAME: kind
+-          SKIP_CLUSTER_CREATION: true
+-          SKIP_IMAGE_CREATION: true
+-          IS_CHROOT: true
+-        run: |
+-          kind get kubeconfig > $HOME/.kube/kind-config-kind
+-          make kind-e2e-test
+-
+-  test-image-build:
+-    permissions:
+-      contents: read  # for dorny/paths-filter to fetch a list of changed files
+-      pull-requests: read  # for dorny/paths-filter to read pull requests
+-    runs-on: ubuntu-latest
+-    env:
+-      PLATFORMS: linux/amd64,linux/arm64
+-    steps:
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # v2
+-        id: filter-images
+-        with:
+-          token: ${{ secrets.GITHUB_TOKEN }}
+-          filters: |
+-            custom-error-pages:
+-              - 'images/custom-error-pages/**'
+-            cfssl:
+-              - 'images/cfssl/**'
+-            fastcgi-helloserver:
+-              - 'images/fastcgi-helloserver/**'
+-            echo:
+-              - 'images/echo/**'
+-            go-grpc-greeter-server:
+-              - 'images/go-grpc-greeter-server/**'
+-            httpbin:
+-              - 'images/httpbin/**'
+-            kube-webhook-certgen:
+-              - 'images/kube-webhook-certgen/**'
+-            ext-auth-example-authsvc:
+-              - 'images/ext-auth-example-authsvc/**'
+-
+-      - name: custom-error-pages image build
+-        if: ${{ steps.filter-images.outputs.custom-error-pages == 'true' }}
+-        run: |
+-          cd images/custom-error-pages && make build
+-      - name: cfssl image build
+-        if: ${{ steps.filter-images.outputs.cfssl == 'true' }}
+-        run: |
+-          cd images/cfssl && make build
+-      - name: fastcgi-helloserver
+-        if: ${{ steps.filter-images.outputs.fastcgi-helloserver == 'true' }}
+-        run: |
+-          cd images/fastcgi-helloserver && make build
+-      - name: echo image build
+-        if: ${{ steps.filter-images.outputs.echo == 'true' }}
+-        run: |
+-          cd images/echo && make build
+-      - name: go-grpc-greeter-server image build
+-        if: ${{ steps.filter-images.outputs.go-grpc-greeter-server == 'true' }}
+-        run: |
+-          cd images/go-grpc-greeter-server && make build
+-      - name: httpbin image build
+-        if: ${{ steps.filter-images.outputs.httpbin == 'true' }}
+-        run: |
+-          cd images/httpbin && make build
+-      - name: kube-webhook-certgen image build
+-        if: ${{ steps.filter-images.outputs.kube-webhook-certgen == 'true' }}
+-        run: |
+-          cd images/kube-webhook-certgen && make build
+-      - name: ext-auth-example-authsvc
+-        if: ${{ steps.filter-images.outputs.ext-auth-example-authsvc == 'true' }}
+-        run: |
+-          cd images/ext-auth-example-authsvc && make build
+-
+-  test-image:
+-    permissions:
+-      contents: read  # for dorny/paths-filter to fetch a list of changed files
+-      pull-requests: read  # for dorny/paths-filter to read pull requests
+-    runs-on: ubuntu-latest
+-    env:
+-      PLATFORMS: linux/amd64
+-    steps:
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # v2
+-        id: filter-images
+-        with:
+-          token: ${{ secrets.GITHUB_TOKEN }}
+-          filters: |
+-            kube-webhook-certgen:
+-              - 'images/kube-webhook-certgen/**'
+-
+-      - name: Create Kubernetes cluster
+-        id: kind
+-        if: ${{ steps.filter-images.outputs.kube-webhook-certgen == 'true' }}
+-        uses: engineerd/setup-kind@aa272fe2a7309878ffc2a81c56cfe3ef108ae7d0 # v0.5.0
+-        with:
+-          version: v0.11.1
+-          image: kindest/node:v1.21.1
+-
+-      - name: Set up Go 1.17
+-        id: go
+-        if: ${{ steps.filter-images.outputs.kube-webhook-certgen == 'true' }}
+-        uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492 # v2
+-        with:
+-          go-version: '1.17.6'
+-
+-      - name: kube-webhook-certgen image build
+-        if: ${{ steps.filter-images.outputs.kube-webhook-certgen == 'true' }}
+-        run: |
+-          cd images/kube-webhook-certgen && make test test-e2e
+diff --git a/.github/workflows/depreview.yaml b/.github/workflows/depreview.yaml
+deleted file mode 100644
+index f2605b7a7..000000000
+--- a/.github/workflows/depreview.yaml
++++ /dev/null
+@@ -1,14 +0,0 @@
+-name: 'Dependency Review'
+-on: [pull_request]
+-
+-permissions:
+-  contents: read
+-
+-jobs:
+-  dependency-review:
+-    runs-on: ubuntu-latest
+-    steps:
+-      - name: 'Checkout Repository'
+-        uses: actions/checkout@v3
+-      - name: 'Dependency Review'
+-        uses: actions/dependency-review-action@v1
+diff --git a/.github/workflows/docs.yaml b/.github/workflows/docs.yaml
+deleted file mode 100644
+index df398b3f1..000000000
+--- a/.github/workflows/docs.yaml
++++ /dev/null
+@@ -1,54 +0,0 @@
+-name: Documentation
+-
+-on:
+-  push:
+-    branches:
+-      - main
+-
+-jobs:
+-
+-  changes:
+-    permissions:
+-      contents: read  # for dorny/paths-filter to fetch a list of changed files
+-      pull-requests: read  # for dorny/paths-filter to read pull requests
+-    runs-on: ubuntu-latest
+-    if: |
+-      (github.repository == 'kubernetes/ingress-nginx')
+-    outputs:
+-      docs: ${{ steps.filter.outputs.docs }}
+-      charts: ${{ steps.filter.outputs.charts }}
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # v2
+-        id: filter
+-        with:
+-          token: ${{ secrets.GITHUB_TOKEN }}
+-          filters: |
+-            docs:
+-             - 'docs/**/*'
+-
+-  docs:
+-    name: Update
+-    runs-on: ubuntu-latest
+-    needs:
+-      - changes
+-    if: |
+-      (github.repository == 'kubernetes/ingress-nginx') &&
+-      (needs.changes.outputs.docs == 'true')
+-
+-    permissions:
+-      contents: write # needed to write releases
+-
+-    steps:
+-
+-      - name: Checkout master
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - name: Deploy
+-        uses: ./.github/actions/mkdocs
+-        env:
+-          PERSONAL_TOKEN: "${{ secrets.GITHUB_TOKEN }}" 
+diff --git a/.github/workflows/helm.yaml b/.github/workflows/helm.yaml
+deleted file mode 100644
+index c20716065..000000000
+--- a/.github/workflows/helm.yaml
++++ /dev/null
+@@ -1,70 +0,0 @@
+-name: Helm
+-
+-on:
+-  push:
+-    branches:
+-      - main
+-      - legacy
+-
+-jobs:
+-
+-  changes:
+-    permissions:
+-      contents: read  # for dorny/paths-filter to fetch a list of changed files
+-      pull-requests: read  # for dorny/paths-filter to read pull requests
+-    runs-on: ubuntu-latest
+-    if: |
+-      (github.repository == 'kubernetes/ingress-nginx')
+-    outputs:
+-      docs: ${{ steps.filter.outputs.docs }}
+-      charts: ${{ steps.filter.outputs.charts }}
+-
+-    steps:
+-
+-      - name: Checkout
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-
+-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721 # v2
+-        id: filter
+-        with:
+-          token: ${{ secrets.GITHUB_TOKEN }}
+-          filters: |
+-            charts:
+-              - 'charts/ingress-nginx/Chart.yaml'
+-              - 'charts/ingress-nginx/**/*'
+-
+-  chart:
+-    name: Release Chart
+-    runs-on: ubuntu-latest
+-
+-    permissions:
+-      contents: write # needed to write releases
+-
+-    needs:
+-      - changes
+-    if: |
+-      (github.repository == 'kubernetes/ingress-nginx') &&
+-      (needs.changes.outputs.charts == 'true')
+-
+-    steps:
+-
+-      - name: Checkout master
+-        uses: actions/checkout@629c2de402a417ea7690ca6ce3f33229e27606a5 # v2
+-        with:
+-          # Fetch entire history. Required for chart-releaser; see https://github.com/helm/chart-releaser-action/issues/13#issuecomment-602063896
+-          fetch-depth: 0
+-
+-      - name: Setup
+-        shell: bash
+-        run: |
+-          git config --global user.name "$GITHUB_ACTOR"
+-          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+-      
+-      - name: Helm Chart Releaser
+-        uses: helm/chart-releaser-action@v1.4.0
+-        env:
+-          CR_SKIP_EXISTING: "false"
+-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+-          CR_RELEASE_NAME_TEMPLATE: "helm-chart-{{ .Version }}"
+-        with:
+-          charts_dir: charts
+diff --git a/.github/workflows/release.txt b/.github/workflows/release.txt
+deleted file mode 100644
+index 18039311e..000000000
+--- a/.github/workflows/release.txt
++++ /dev/null
+@@ -1,128 +0,0 @@
+-name: Release
+-
+-on:
+-  watch:
+-    types: [started]
+-
+-jobs:
+-  release:
+-    runs-on: ubuntu-latest
+-    if: github.actor == 'aledbf'
+-    steps:
+-      - name: Checkout master
+-        uses: actions/checkout@v2
+-
+-      - name: Set up Go 1.14
+-        uses: actions/setup-go@master
+-        with:
+-          go-version: 1.14
+-
+-      - name: Build krew plugin
+-        shell: bash
+-        run: |
+-          export PATH=${PATH}:`go env GOPATH`/bin
+-          make build-plugin
+-
+-#      - name: Build and publish images
+-#        shell: bash
+-#        run: |
+-#          cat <<EOF | > build/images/nginx/aws.tfvars
+-#          access_key = "${{ secrets.AWS_ACCESS_KEY }}"
+-#          secret_key = "${{ secrets.AWS_ACCESS_SECRET_KEY }}"
+-#          EOF
+-#
+-#          cat <<EOF | > build/images/nginx/env.tfvars
+-#          docker_username="${{ secrets.DOCKER_USERNAME }}"
+-#          docker_password="${{ secrets.DOCKER_PASSWORD }}"
+-#          EOF
+-#
+-#          ./build/build-ingress-controller.sh
+-
+-      - name: Create env variables
+-        shell: bash
+-        run: |
+-          # $(cat cmd/plugin/release/ingress-nginx.yaml)
+-          echo "::set-env name=RELEASE_VERSION::$(make show-version)"
+-          echo "::set-env name=RELEASE_CHANGELOG::##CHANGELOG##"
+-
+-      - name: Create release
+-        id: create_release
+-        uses: actions/create-release@v1
+-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/controller')
+-        env:
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-        with:
+-          tag_name: controller-${{ env.RELEASE_VERSION }}
+-          release_name: "NGINX: ${{ env.RELEASE_VERSION }}"
+-          body: |
+-            **Image:** `quay.io/kubernetes-ingress-controller/nginx-ingress-controller:${{ env.RELEASE_VERSION }}`
+-
+-            ${{ env.RELEASE_CHANGELOG }}
+-
+-            Complete changelog [here](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md)
+-
+-          draft: false
+-          prerelease: false
+-
+-      - name: Upload krew plugin Darwin
+-        uses: actions/upload-release-asset@v1
+-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/controller')
+-        env:
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-        with:
+-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+-          asset_path: cmd/plugin/release/kubectl-ingress_nginx-darwin-amd64.tar.gz
+-          asset_name: kubectl-ingress_nginx-darwin-amd64.tar.gz
+-          asset_content_type: application/tar+gzip
+-
+-      - name: Upload krew plugin Linux
+-        uses: actions/upload-release-asset@v1
+-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/controller')
+-        env:
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-        with:
+-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+-          asset_path: cmd/plugin/release/kubectl-ingress_nginx-linux-amd64.tar.gz
+-          asset_name: kubectl-ingress_nginx-linux-amd64.tar.gz
+-          asset_content_type: application/tar+gzip
+-
+-      - name: Upload krew plugin Windows
+-        uses: actions/upload-release-asset@v1
+-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/controller')
+-        env:
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-        with:
+-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+-          asset_path: cmd/plugin/release/kubectl-ingress_nginx-windows-amd64.tar.gz
+-          asset_name: kubectl-ingress_nginx-windows-amd64.tar.gz
+-          asset_content_type: application/tar+gzip
+-
+-      - name: Upload krew plugin
+-        uses: actions/upload-release-asset@v1
+-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/controller')
+-        env:
+-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-        with:
+-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+-          asset_path: cmd/plugin/release/ingress-nginx.yaml
+-          asset_name: ingress-nginx.yaml
+-          asset_content_type: text/x-yaml
+-
+-      - name: Create KREW_PLUGIN_BODY_PR env variable
+-        shell: bash
+-        run: |
+-          echo "::set-env name=KREW_PLUGIN_BODY_PR::$(cat cmd/plugin/release/ingress-nginx.yaml)"
+-
+-#      - name: Open PR for new release of Krew Plugin
+-#        uses: gha-utilities/init-pull-request@v0.1.2
+-#        env:
+-#          GITHUB_REPOSITORY: maintainer/repo-name
+-#        with:
+-#          verbose: true
+-#          draft: false
+-#          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+-#          head: ingress-nginx:krew
+-#          base: krew
+-#          title: 'Update ingress-nginx krew plugin to ${{ env.RELEASE_VERSION }}'
+-#          body: |
+-#            ${{ env.KREW_PLUGIN_BODY_PR }}
+diff --git a/.gitignore b/.gitignore
+index 0943c3b1a..93eaa9ac0 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -59,3 +59,6 @@ images/fastcgi-helloserver/rootfs/fastcgi-helloserver
+ cmd/plugin/release/ingress-nginx.yaml
+ cmd/plugin/release/*.tar.gz
+ cmd/plugin/release/LICENSE
++
++# misc
++.github-exclude
+diff --git a/Makefile b/Makefile
+index 935035e27..512beb1a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -53,9 +53,9 @@ ifneq ($(PLATFORM),)
+ 	PLATFORM_FLAG="--platform"
+ endif
+ 
+-REGISTRY ?= gcr.io/k8s-staging-ingress-nginx
++REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
+ 
+-BASE_IMAGE ?= k8s.gcr.io/ingress-nginx/nginx:81c2afd975a6f9a9847184472286044d7d5296f6@sha256:a71ac64dd8cfd68341ba47dbdc4d8c2cb91325fce669875193ea0319118201b5
++BASE_IMAGE ?= r.awan.app/library/k8s-ingress-nginx/nginx:v1.2.0
+ 
+ GOARCH=$(ARCH)
+ 
+diff --git a/build/run-in-docker.sh b/build/run-in-docker.sh
+index 315756269..49c7a997e 100755
+--- a/build/run-in-docker.sh
++++ b/build/run-in-docker.sh
+@@ -37,7 +37,7 @@ function cleanup {
+ }
+ trap cleanup EXIT
+ 
+-E2E_IMAGE=${E2E_IMAGE:-k8s.gcr.io/ingress-nginx/e2e-test-runner:v20220331-controller-v1.1.2-31-gf1cb2b73c@sha256:baa326f5c726d65be828852943a259c1f0572883590b9081b7e8fa982d64d96e}
++E2E_IMAGE=${E2E_IMAGE:-r.awan.app/library/k8s-ingress-nginx/e2e-test-runner:v1.2.0}
+ 
+ DOCKER_OPTS=${DOCKER_OPTS:-}
+ DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-}
+diff --git a/images/kube-webhook-certgen/Makefile b/images/kube-webhook-certgen/Makefile
+index f1d3edc5b..57cae6f69 100644
+--- a/images/kube-webhook-certgen/Makefile
++++ b/images/kube-webhook-certgen/Makefile
+@@ -20,7 +20,7 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+ INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
+ 
+ TAG ?=v$(shell date +%m%d%Y)-$(shell git rev-parse --short HEAD)
+-REGISTRY ?= local
++REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
+ 
+ IMAGE = $(REGISTRY)/kube-webhook-certgen
+ 
+@@ -28,7 +28,7 @@ IMAGE = $(REGISTRY)/kube-webhook-certgen
+ export DOCKER_CLI_EXPERIMENTAL=enabled
+ 
+ # build with buildx
+-PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x
++PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x,linux/ppc64le
+ OUTPUT=
+ PROGRESS=plain
+ 
+@@ -39,6 +39,11 @@ build: ensure-buildx
+ 		--pull \
+ 		-t $(IMAGE):$(TAG) rootfs
+ 
++custom-build: 
++	docker build  \
++		--build-arg TARGETARCH=$(ARCH) \
++		-t $(IMAGE):$(TAG) rootfs
++
+ # push the cross built image
+ push: OUTPUT=--push
+ push: build
+diff --git a/images/kube-webhook-certgen/rootfs/Dockerfile b/images/kube-webhook-certgen/rootfs/Dockerfile
+index f9020fa41..ca3ce67e6 100644
+--- a/images/kube-webhook-certgen/rootfs/Dockerfile
++++ b/images/kube-webhook-certgen/rootfs/Dockerfile
+@@ -12,15 +12,17 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-FROM --platform=$BUILDPLATFORM golang:1.16 as builder
+-ARG BUILDPLATFORM
+-ARG TARGETARCH
++#FROM --platform=$BUILDPLATFORM golang:1.16 as builder 
++FROM --platform=linux/ppc64le golang:1.16 as builder
++
++ARG BUILDPLATFORM=linux/ppc64le
++ARG TARGETARCH=ppc64le
+ 
+ WORKDIR /workspace
+ COPY . .
+ RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -a -o kube-webhook-certgen main.go
+ 
+-FROM --platform=$BUILDPLATFORM gcr.io/distroless/static:nonroot
++FROM --platform=linux/ppc64le gcr.io/distroless/static:nonroot
+ ARG BUILDPLATFORM
+ ARG TARGETARCH
+ WORKDIR /
+diff --git a/images/nginx/Makefile b/images/nginx/Makefile
+index 438d0cfe1..5c9ea7cbf 100644
+--- a/images/nginx/Makefile
++++ b/images/nginx/Makefile
+@@ -22,7 +22,7 @@ INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
+ 
+ # 0.0.0 shouldn't clobber any released builds
+ TAG ?= 0.0
+-REGISTRY ?= gcr.io/k8s-staging-ingress-nginx
++REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
+ 
+ IMAGE = $(REGISTRY)/nginx
+ 
+@@ -30,7 +30,7 @@ IMAGE = $(REGISTRY)/nginx
+ export DOCKER_CLI_EXPERIMENTAL=enabled
+ 
+ # build with buildx
+-PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x
++PLATFORMS?=linux/amd64,linux/arm,linux/arm64,linux/s390x,linux/ppc64le
+ OUTPUT=
+ PROGRESS=plain
+ build: ensure-buildx
+@@ -40,6 +40,9 @@ build: ensure-buildx
+ 		--pull \
+ 		--tag $(IMAGE):$(TAG) rootfs
+ 
++custom-build: 
++	docker build --tag $(IMAGE):$(TAG) rootfs
++
+ # push the cross built image
+ push: OUTPUT=--push
+ push: build
+@@ -54,4 +57,4 @@ else
+ endif
+ 	@echo "done"
+ 
+-.PHONY: build push ensure-buildx
++.PHONY: custom-build build push ensure-buildx
+diff --git a/images/nginx/rootfs/build.sh b/images/nginx/rootfs/build.sh
+index 2ee308d68..b32c2ea2d 100755
+--- a/images/nginx/rootfs/build.sh
++++ b/images/nginx/rootfs/build.sh
+@@ -138,6 +138,13 @@ if [[ ${ARCH} == "s390x" ]]; then
+   export LUA_STREAM_NGX_VERSION=0.0.7
+ fi
+ 
++if [[ ${ARCH} == "ppc64le" ]]; then
++  export LUAJIT_VERSION=2763a421d6219c8cb2bbd39246de619dc796bab6
++  export LUA_RESTY_CORE=0.1.17
++  export LUA_NGX_VERSION=0.10.15
++  export LUA_STREAM_NGX_VERSION=0.0.7
++fi
++
+ get_src()
+ {
+   hash="$1"
+@@ -237,6 +244,11 @@ get_src 754c3ace499a63e45b77ef4bcab4ee602c2c414f58403bce826b76ffc2f77d0b \
+         "https://github.com/msgpack/msgpack-c/archive/cpp-$MSGPACK_VERSION.tar.gz"
+ 
+ if [[ ${ARCH} == "s390x" ]]; then
++get_src 7d5f3439c8df56046d0564b5857fd8a30296ab1bd6df0f048aed7afb56a0a4c2 \
++        "https://github.com/openresty/lua-nginx-module/archive/v$LUA_NGX_VERSION.tar.gz"
++get_src 99c47c75c159795c9faf76bbb9fa58e5a50b75286c86565ffcec8514b1c74bf9 \
++        "https://github.com/openresty/stream-lua-nginx-module/archive/v$LUA_STREAM_NGX_VERSION.tar.gz"
++elif [[ ${ARCH} == "ppc64le" ]]; then
+ get_src 7d5f3439c8df56046d0564b5857fd8a30296ab1bd6df0f048aed7afb56a0a4c2 \
+         "https://github.com/openresty/lua-nginx-module/archive/v$LUA_NGX_VERSION.tar.gz"
+ get_src 99c47c75c159795c9faf76bbb9fa58e5a50b75286c86565ffcec8514b1c74bf9 \
+@@ -256,6 +268,9 @@ get_src a92c9ee6682567605ece55d4eed5d1d54446ba6fba748cff0a2482aea5713d5f \
+ if [[ ${ARCH} == "s390x" ]]; then
+ get_src 266ed1abb70a9806d97cb958537a44b67db6afb33d3b32292a2d68a2acedea75 \
+         "https://github.com/openresty/luajit2/archive/$LUAJIT_VERSION.tar.gz"
++elif [[ ${ARCH} == "ppc64le" ]]; then
++get_src d3c55f72d0dc3241a2a7da7a7dad97800ce329adf70eab80a6f08f156eeb6be8 \
++        "https://github.com/openresty/luajit2/archive/$LUAJIT_VERSION.tar.gz"
+ else
+ get_src 1ee6dad809a5bb22efb45e6dac767f7ce544ad652d353a93d7f26b605f69fe3f \
+         "https://github.com/openresty/luajit2/archive/v$LUAJIT_VERSION.tar.gz"
+@@ -283,6 +298,9 @@ get_src 16d72ed133f0c6df376a327386c3ef4e9406cf51003a700737c3805770ade7c5 \
+         "https://github.com/openresty/lua-resty-balancer/archive/v$LUA_RESTY_BALANCER.tar.gz"
+ 
+ if [[ ${ARCH} == "s390x" ]]; then
++get_src 8f5f76d2689a3f6b0782f0a009c56a65e4c7a4382be86422c9b3549fe95b0dc4 \
++        "https://github.com/openresty/lua-resty-core/archive/v$LUA_RESTY_CORE.tar.gz"
++elif [[ ${ARCH} == "ppc64le" ]]; then
+ get_src 8f5f76d2689a3f6b0782f0a009c56a65e4c7a4382be86422c9b3549fe95b0dc4 \
+         "https://github.com/openresty/lua-resty-core/archive/v$LUA_RESTY_CORE.tar.gz"
+ else
+diff --git a/images/test-runner/Makefile b/images/test-runner/Makefile
+index e6e047e6c..af52d2b0a 100644
+--- a/images/test-runner/Makefile
++++ b/images/test-runner/Makefile
+@@ -19,11 +19,11 @@ DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+ INIT_BUILDX=$(DIR)/../../hack/init-buildx.sh
+ 
+ TAG ?=v$(shell date +%m%d%Y)-$(shell git rev-parse --short HEAD)
+-REGISTRY ?= local
++REGISTRY ?= r.awan.app/library/k8s-ingress-nginx
+ 
+ IMAGE = $(REGISTRY)/e2e-test-runner
+ 
+-NGINX_BASE_IMAGE ?= k8s.gcr.io/ingress-nginx/nginx:81c2afd975a6f9a9847184472286044d7d5296f6@sha256:a71ac64dd8cfd68341ba47dbdc4d8c2cb91325fce669875193ea0319118201b5
++NGINX_BASE_IMAGE ?= r.awan.app/library/k8s-ingress-nginx/nginx:v1.2.0
+ 
+ # required to enable buildx
+ export DOCKER_CLI_EXPERIMENTAL=enabled
+@@ -52,6 +52,23 @@ build: ensure-buildx
+ 		--build-arg HELM_VERSION=v3.4.2 \
+ 		-t $(IMAGE):$(TAG) rootfs
+ 
++custom-build:
++	docker build \
++                --build-arg BASE_IMAGE=$(NGINX_BASE_IMAGE) \
++                --build-arg GOLANG_VERSION=1.17.6 \
++                --build-arg ETCD_VERSION=3.4.3-0 \
++                --build-arg K8S_RELEASE=v1.21.3 \
++                --build-arg RESTY_CLI_VERSION=0.27 \
++                --build-arg RESTY_CLI_SHA=e5f4f3128af49ba5c4d039d0554e5ae91bbe05866f60eccfa96d3653274bff90 \
++                --build-arg LUAROCKS_VERSION=3.8.0 \
++                --build-arg LUAROCKS_SHA=ab6612ca9ab87c6984871d2712d05525775e8b50172701a0a1cabddf76de2be7 \
++                --build-arg CHART_TESTING_VERSION=3.0.0 \
++                --build-arg YAML_LINT_VERSION=1.13.0 \
++                --build-arg YAMALE_VERSION=1.8.0 \
++                --build-arg HELM_VERSION=v3.4.2 \
++		--build-arg TARGETARCH=$(ARCH) \
++                -t $(IMAGE):$(TAG) rootfs
++
+ # push the cross built image
+ push: OUTPUT=--push
+ push: build

@@ -12,15 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM --platform=$BUILDPLATFORM golang:1.16 as builder
-ARG BUILDPLATFORM
-ARG TARGETARCH
+#FROM --platform=$BUILDPLATFORM golang:1.16 as builder 
+FROM --platform=linux/ppc64le golang:1.16 as builder
+
+ARG BUILDPLATFORM=linux/ppc64le
+ARG TARGETARCH=ppc64le
 
 WORKDIR /workspace
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -a -o kube-webhook-certgen main.go
 
-FROM --platform=$BUILDPLATFORM gcr.io/distroless/static:nonroot
+FROM --platform=linux/ppc64le gcr.io/distroless/static:nonroot
 ARG BUILDPLATFORM
 ARG TARGETARCH
 WORKDIR /
